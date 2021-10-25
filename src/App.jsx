@@ -7,6 +7,7 @@ import { FileList } from "./fileList";
 import { useState } from "react";
 import { uniqueId } from "lodash";
 import fileSize from "filesize";
+import api from "./services/api";
 
 
 function App() {
@@ -26,7 +27,31 @@ function App() {
     }))
 
     setUploadedFiles(uploaded.concat(uploadedFiles))
+
+    uploadedFiles.forEach(processUpload)
   };
+
+  const updateFile = (id, data) => {
+    setUploadedFiles(uploadedFiles.map(uploadedFile => {
+      return id === uploadedFile.id ? { ...uploadedFile, ...data } : uploadedFile;
+    }))
+  }
+
+  const processUpload = uploadedFile => {
+    const data = new FormData()
+
+    data.append("file", uploadedFile.file, uploadedFile.name)
+
+    api.post("posts", data, {
+      onUploadProgress: e => {
+        const progress = parseInt(Math.round((e.loaded * 100) / e.total))
+
+        updateFile(uploadedFile.id, {
+          progress
+        })
+      }
+    })
+  }
 
   return (
     <Container>

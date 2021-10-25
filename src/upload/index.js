@@ -1,5 +1,3 @@
-
-
 import Dropzone from 'react-dropzone';
 import { DropContainer, UploadMessage } from "./styles"
 
@@ -12,7 +10,6 @@ export const Upload = ({onUpload}) => {
 
         if (isDragReject) {
             return <UploadMessage type="error"> Arquivo não suportado</UploadMessage>
-
         }
 
         return <UploadMessage type="success"> Solte os arquivos</UploadMessage>

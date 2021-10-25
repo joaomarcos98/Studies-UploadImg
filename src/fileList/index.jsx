@@ -5,7 +5,7 @@ import { MdCheckCircle, MdError, MdLink, MdUploadFile } from "react-icons/md";
 export const FileList = ({ files }) => (
     <Container >
         {files.map(file => (
-            <li>
+            <li key={file.id}>
                 <FileInfo>
                     <div>
                         <strong>{file.name}</strong>
@@ -20,8 +20,8 @@ export const FileList = ({ files }) => (
                                 root: { width: 24 },
                                 path: { stroke: "#7159c1" }
                             }}
-                            strokeWidth={10}
-                            percentage={file.progress}
+                            strokeWidth={16}
+                            value={file.progress}
                         />
                     )}
                     {file.url && (
